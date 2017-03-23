@@ -1,4 +1,4 @@
-;;; mcyt.el --- mark, copy, yank things
+;;; mark-copy-yank-things-mode.el --- mark, copy, yank things
 
 ;; Copyright (C) 2017, T.v.Dein <tlinden@cpan.org>
 
@@ -86,7 +86,7 @@
 
 ;;;; Install:
 
-;; To use, save mcyt.el to a directory in your load-path.
+;; To use, save mark-copy-yank-things-mode.el to a directory in your load-path.
 
 ;; Add something like this to your config:
 
@@ -665,4 +665,4 @@ below and place the cursor on the end of copied comment"
 
 
 
-;;; mcyt.el ends here
+;;; mark-copy-yank-things-mode.el ends here

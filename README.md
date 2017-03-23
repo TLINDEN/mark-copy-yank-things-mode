@@ -61,7 +61,7 @@ https://github.com/magnars/expand-region.el.
 
 #### Install:
 
-To use, save mcyt.el to a directory in your load-path.
+To use, save mark-copy-yank-things-mode.el to a directory in your load-path.
 
 Add something like this to your config:
 
