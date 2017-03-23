@@ -1,4 +1,4 @@
-### MCYT - An emacs minor mode to marl, copy, and yank things
+### MCYT - An emacs minor mode to mark, copy, and yank things
 
 #### Demo
 
