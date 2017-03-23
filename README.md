@@ -1,3 +1,11 @@
+### MCYT - An emacs minor mode to marl, copy, and yank things
+
+#### Demo
+
+# Demo
+
+![demo](http://www.daemon.de/idisk/Misc/mcyt-mode-demo.gif)
+
 #### Usage
 
 MCYT  minor mode  provides  convenience functions  and wrappers  to
