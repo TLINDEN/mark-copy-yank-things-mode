@@ -17,6 +17,7 @@ marking things. Each sub map has it's own prefix key:
     C-c m        mark things prefix
 
 COPY commands (keymap: mcyt-copy-map):
+
     C-c c w      mcyt-copy-word 
     C-c c q      mcyt-copy-quote 
     C-c c k      mcyt-copy-parens 
@@ -31,6 +32,7 @@ COPY commands (keymap: mcyt-copy-map):
     C-c c s      mcyt-copy-sexp
 
 COPY & YANK commands (keymap: mcyt-yank-map):
+
     C-c c y y    mcyt-copy-and-yank-line
     C-c c y l    mcyt-copy-and-yank-line
     C-c c y p    mcyt-copy-and-yank-paragraph
@@ -41,6 +43,7 @@ COPY & YANK commands (keymap: mcyt-yank-map):
     C-c c y c    mcyt-copy-and-yank-comment
 
 MARK commands (keymap: mcyt-mark-map):
+
     C-c c a a    mcyt-mark-buffer 
     C-c c a w    mcyt-mark-word 
     C-c c a f    mcyt-mark-defun 
@@ -62,16 +65,16 @@ To use, save mcyt.el to a directory in your load-path.
 
 Add something like this to your config:
 
-   (require 'mark-copy-yank-things-mode)
-   (add-hook 'text-mode-hook 'mark-copy-yank-things-mode)
+    (require 'mark-copy-yank-things-mode)
+    (add-hook 'text-mode-hook 'mark-copy-yank-things-mode)
 
 or load it manually, when needed:
 
-   M-x mark-copy-yank-things-mode
+    M-x mark-copy-yank-things-mode
 
 However, it's also possible to enable MCYT globally:
 
-   (mark-copy-yank-things-global-mode)
+    (mark-copy-yank-things-global-mode)
 
 #### Customize
 
@@ -83,15 +86,15 @@ Of course the mark commands do highlight anyway.
 
 You can also customize the various prefix keys defined for this mode:
 
-   (define-key mark-copy-yank-things-mode-map (kbd "C-c c") 'mcyt-copy-map)
-   (define-key mark-copy-yank-things-mode-map (kbd "C-c y") 'mcyt-yank-map)
-   (define-key mark-copy-yank-things-mode-map (kbd "C-c m") 'mcyt-mark-map)
+    (define-key mark-copy-yank-things-mode-map (kbd "C-c c") 'mcyt-copy-map)
+    (define-key mark-copy-yank-things-mode-map (kbd "C-c y") 'mcyt-yank-map)
+    (define-key mark-copy-yank-things-mode-map (kbd "C-c m") 'mcyt-mark-map)
 
 You may also directly customize the key bindings, e.g:
 
-   (define-key mcyt-copy-map (kbd "l") 'mcyt-copy-line)
-   (define-key mcyt-yank-map (kbd "l") 'mcyt-yank-line)
-   (define-key mcyt-mark-map (kbd "l") 'mcyt-mark-line)
+    (define-key mcyt-copy-map (kbd "l") 'mcyt-copy-line)
+    (define-key mcyt-yank-map (kbd "l") 'mcyt-yank-line)
+    (define-key mcyt-mark-map (kbd "l") 'mcyt-mark-line)
 
 #### Reporting Bugs:
 
