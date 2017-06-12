@@ -19,7 +19,7 @@
 ;; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
 ;; USA
 
-;; Version: 0.01
+;; Version: 0.02
 ;; Author: T.v.Dein <tlinden@cpan.org>
 ;; Keywords: copy yank mark things
 ;; URL: https://github.com/tlinden/mark-copy-yank-things
@@ -134,7 +134,7 @@
 
 ;;;; Consts and Defs
 
-(defconst mark-copy-yank-things-mode-version "0.01" "Mark-Copy-Yank-Things Mode version.")
+(defconst mark-copy-yank-things-mode-version "0.02" "Mark-Copy-Yank-Things Mode version.")
 
 (defgroup mark-copy-yank-things-mode nil
   "Kill first, ask later - an emacs mode for killing things quickly"
@@ -651,7 +651,8 @@ below and place the cursor on the end of copied comment"
 (define-minor-mode mark-copy-yank-things-mode "mark, copy and yank various things"
   :lighter " Y"
   :group 'mark-copy-yank-things-mode
-  (mcyt--load-prefix-maps))
+  (mcyt--load-prefix-maps)
+  (run-hooks 'mark-copy-yank-things-mode-hook))
 
 ;; just in case someone wants to use it globally
 (define-globalized-minor-mode mark-copy-yank-things-global-mode
