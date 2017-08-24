@@ -38,6 +38,10 @@ COPY commands (keymap: mcyt-copy-map):
     C-c c a      mcyt-copy-buffer 
     C-c c i      mcyt-copy-ip 
     C-c c s      mcyt-copy-sexp
+    C-c c >      mcyt-copy-buffer-after-point
+    C-c c <      mcyt-copy-buffer-before-point
+    C-c c $      mcyt-copy-line-after-point
+    C-c c ^      mcyt-copy-line-before-point
 
 COPY & YANK commands (keymap: mcyt-yank-map):
 
@@ -61,7 +65,11 @@ MARK commands (keymap: mcyt-mark-map):
     C-c c a e    mcyt-mark-email 
     C-c c a s    mcyt-mark-sexp 
     C-c c a c    mcyt-mark-comment-block 
-    C-c c a i    mcyt-mark-ip 
+    C-c c a i    mcyt-mark-ip
+    C-c c a >    mcyt-mark-buffer-after-point
+    C-c c a <    mcyt-mark-buffer-before-point
+    C-c c a $    mcyt-mark-line-after-point
+    C-c c a ^    mcyt-mark-line-before-point
 
 Please note,  the commands  mcyt-copy-sexp and  mcyt-mark-sexp only
 work  if  expand-region  is  installed.   You  can  find  it  here:
@@ -108,3 +116,7 @@ You may also directly customize the key bindings, e.g:
 
 Open   https://github.com/tlinden/mark-copy-yank-things/issues  and
 file a new issue.
+
+#### Similar Tools:
+
+[easy-kill](https://github.com/leoliu/easy-kill) plus [easy-kill-extras](https://github.com/knu/easy-kill-extras.el)

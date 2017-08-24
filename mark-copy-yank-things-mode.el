@@ -19,7 +19,7 @@
 ;; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
 ;; USA
 
-;; Version: 0.02
+;; Version: 0.03
 ;; Author: T.v.Dein <tlinden@cpan.org>
 ;; Keywords: copy yank mark things
 ;; URL: https://github.com/tlinden/mark-copy-yank-things
@@ -45,18 +45,22 @@
 ;;     C-c m        mark things prefix
 
 ;; COPY commands (keymap: mcyt-copy-map):
-;;     C-c c w      mcyt-copy-word 
-;;     C-c c q      mcyt-copy-quote 
-;;     C-c c k      mcyt-copy-parens 
-;;     C-c c l      mcyt-copy-line 
-;;     C-c c p      mcyt-copy-paragraph 
-;;     C-c c f      mcyt-copy-defun 
-;;     C-c c u      mcyt-copy-url 
-;;     C-c c e      mcyt-copy-email 
-;;     C-c c c      mcyt-copy-comment-block 
-;;     C-c c a      mcyt-copy-buffer 
-;;     C-c c i      mcyt-copy-ip 
+;;     C-c c w      mcyt-copy-word
+;;     C-c c q      mcyt-copy-quote
+;;     C-c c k      mcyt-copy-parens
+;;     C-c c l      mcyt-copy-line
+;;     C-c c p      mcyt-copy-paragraph
+;;     C-c c f      mcyt-copy-defun
+;;     C-c c u      mcyt-copy-url
+;;     C-c c e      mcyt-copy-email
+;;     C-c c c      mcyt-copy-comment-block
+;;     C-c c a      mcyt-copy-buffer
+;;     C-c c i      mcyt-copy-ip
 ;;     C-c c s      mcyt-copy-sexp
+;;     C-c c >      mcyt-copy-buffer-after-point
+;;     C-c c <      mcyt-copy-buffer-before-point
+;;     C-c c $      mcyt-copy-line-after-point
+;;     C-c c ^      mcyt-copy-line-before-point
 
 ;; COPY & YANK commands (keymap: mcyt-yank-map):
 ;;     C-c c y y    mcyt-copy-and-yank-line
@@ -69,16 +73,20 @@
 ;;     C-c c y c    mcyt-copy-and-yank-comment
 
 ;; MARK commands (keymap: mcyt-mark-map):
-;;     C-c c a a    mcyt-mark-buffer 
-;;     C-c c a w    mcyt-mark-word 
-;;     C-c c a f    mcyt-mark-defun 
-;;     C-c c a p    mcyt-mark-paragraph 
-;;     C-c c a l    mcyt-mark-line 
-;;     C-c c a u    mcyt-mark-url 
-;;     C-c c a e    mcyt-mark-email 
-;;     C-c c a s    mcyt-mark-sexp 
-;;     C-c c a c    mcyt-mark-comment-block 
-;;     C-c c a i    mcyt-mark-ip 
+;;     C-c c a a    mcyt-mark-buffer
+;;     C-c c a w    mcyt-mark-word
+;;     C-c c a f    mcyt-mark-defun
+;;     C-c c a p    mcyt-mark-paragraph
+;;     C-c c a l    mcyt-mark-line
+;;     C-c c a u    mcyt-mark-url
+;;     C-c c a e    mcyt-mark-email
+;;     C-c c a s    mcyt-mark-sexp
+;;     C-c c a c    mcyt-mark-comment-block
+;;     C-c c a i    mcyt-mark-ip
+;;     C-c c a >    mcyt-mark-buffer-after-point
+;;     C-c c a <    mcyt-mark-buffer-before-point
+;;     C-c c a $    mcyt-mark-line-after-point
+;;     C-c c a ^    mcyt-mark-line-before-point
 
 ;; Please note,  the commands  mcyt-copy-sexp and  mcyt-mark-sexp only
 ;; work  if  expand-region  is  installed.   You  can  find  it  here:
@@ -196,11 +204,11 @@ Also, font-lock will be removed, if any."
           (kill-region (point-min) (point-max))
           )))))
 
-(defun mcyt--blink-and-copy-thing (begin end &optional arg)
+(defun mcyt--blink-and-copy-thing (begin end &optional arg cap)
   "General wrapper for all copy[+yank] functions. Highlights
 the region BEGIN to END for mark-copy-yank-things-blink-time
 seconds, then copies the stuff in between into the kill-ring."
-  (let ((name (car (last (split-string (symbol-name begin) "-")))))
+  (let ((name (or cap (car (last (split-string (symbol-name end) "-"))))))
     (if (eq t mark-copy-yank-things-enable-blinking)
         (mcyt--blink (mcyt--get-point begin 1) (mcyt--get-point end 1)))
     (mcyt--copy-thing begin end arg)
@@ -224,6 +232,10 @@ at point is a whitespace"
                       (or (eq f 'font-lock-comment-face)
                           (eq f 'font-lock-comment-delimiter-face)))
                   fontfaces))))
+
+(defun mcyt--point (&optional arg)
+  "Just a wrapper to make blink happy."
+  (point))
 
 ;;;;; Beginning- and End-of-things
 
@@ -317,6 +329,25 @@ of widest comment line."
   (while (looking-at "[-_\.]")
     (forward-word)))
 
+(defun mcyt-buffer-after-point (&optional arg)
+  (interactive)
+  (goto-char (point-max)))
+
+(defun mcyt-buffer-before-point (&optional arg)
+  (interactive)
+  (goto-char (point-min)))
+
+(defun mcyt-line-after-point (&optional arg)
+  (interactive)
+  (end-of-line))
+
+(defun mcyt-line-before-point (&optional arg)
+  (interactive)
+  (beginning-of-line))
+
+
+
+
 
 ;;;;; Prefix-Map Loader and Key Bindings
 
@@ -342,6 +373,10 @@ of widest comment line."
     (define-key mcyt-copy-map (kbd "a") 'mcyt-copy-buffer)
     (define-key mcyt-copy-map (kbd "i") 'mcyt-copy-ip)
     (define-key mcyt-copy-map (kbd "s") 'mcyt-copy-sexp)
+    (define-key mcyt-copy-map (kbd ">") 'mcyt-copy-buffer-after-point)
+    (define-key mcyt-copy-map (kbd "<") 'mcyt-copy-buffer-before-point)
+    (define-key mcyt-copy-map (kbd "$") 'mcyt-copy-line-after-point)
+    (define-key mcyt-copy-map (kbd "^") 'mcyt-copy-line-before-point)
 
 
     ;; CTRL-[c]copy-and-[y]ank [w]word, etc...
@@ -364,8 +399,12 @@ of widest comment line."
     (define-key mcyt-mark-map (kbd "e") 'mcyt-mark-email)
     (define-key mcyt-mark-map (kbd "s") 'mcyt-mark-sexp)
     (define-key mcyt-mark-map (kbd "c") 'mcyt-mark-comment-block)
-    (define-key mcyt-mark-map (kbd "i") 'mcyt-mark-ip))
-    
+    (define-key mcyt-mark-map (kbd "i") 'mcyt-mark-ip)
+    (define-key mcyt-mark-map (kbd ">") 'mcyt-mark-buffer-after-point)
+    (define-key mcyt-mark-map (kbd "<") 'mcyt-mark-buffer-before-point)
+    (define-key mcyt-mark-map (kbd "$") 'mcyt-mark-line-after-point)
+    (define-key mcyt-mark-map (kbd "^") 'mcyt-mark-line-before-point))
+
 ;;;; API Functions / Interface
 ;;;;; Copy
 
@@ -484,6 +523,27 @@ Also supports normal one- or multiline comments, indended or not.
   "Copy ip address at point into kill-ring"
   (interactive "P")
   (mcyt--blink-and-copy-thing 'mcyt-beginning-of-ip 'mcyt-end-of-ip arg))
+
+(defun mcyt-copy-buffer-after-point (&optional arg)
+  "Copy everything from (point) to (eobp)"
+  (interactive "P")
+  (mcyt--blink-and-copy-thing 'mcyt--point 'mcyt-buffer-after-point arg "buffer-after-point"))
+
+(defun mcyt-copy-buffer-before-point (&optional arg)
+  "Copy everything from (point) to (bobp)"
+  (interactive "P")
+  (mcyt--blink-and-copy-thing 'mcyt--point 'mcyt-buffer-before-point arg "buffer-before-point"))
+
+(defun mcyt-copy-line-after-point (&optional arg)
+  "Copy everything from (point) to end of line"
+  (interactive "P")
+  (mcyt--blink-and-copy-thing 'mcyt--point 'mcyt-line-after-point arg "line-after-point"))
+
+(defun mcyt-copy-line-before-point (&optional arg)
+  "Copy everything from (point) to beginning of line"
+  (interactive "P")
+  (mcyt--blink-and-copy-thing 'mcyt--point 'mcyt-line-before-point arg "line-before-point"))
+
 
 ;;;;; Copy+Yank
 
@@ -643,6 +703,32 @@ below and place the cursor on the end of copied comment"
   (interactive)
   (mark-paragraph))
 
+(defun mcyt-mark-buffer-after-point()
+  (interactive)
+  (set-mark-command nil)
+  (mcyt-buffer-after-point)
+  (setq deactivate-mark nil))
+
+(defun mcyt-mark-buffer-before-point()
+  (interactive)
+  (set-mark-command nil)
+  (mcyt-buffer-before-point)
+  (setq deactivate-mark nil))
+
+(defun mcyt-mark-line-after-point()
+  (interactive)
+  (set-mark-command nil)
+  (mcyt-line-after-point)
+  (setq deactivate-mark nil))
+
+(defun mcyt-mark-line-before-point()
+  (interactive)
+  (set-mark-command nil)
+  (mcyt-line-before-point)
+  (setq deactivate-mark nil))
+
+
+
 ;;;; Minor Mode and Key Map
 
 ;;;###autoload
@@ -660,10 +746,5 @@ below and place the cursor on the end of copied comment"
   :group 'mark-copy-yank-things-mode)
 
 (provide 'mark-copy-yank-things-mode)
-
-
-
-
-
 
 ;;; mark-copy-yank-things-mode.el ends here
