@@ -315,8 +315,9 @@ of widest comment line."
   (while (looking-at "[0-9\.\/]")
     (forward-char 1)))
 
-;; We use these for word finding, since the built-in
-;; word functions do not include -_. which is annoying
+;; We use these for word finding, since the built-in word functions do
+;; not include -_. which is annoying, that is we (re-)define word here
+;; independent of syntax table
 (defun mcyt-beginning-of-symbol (&optional arg)
   (interactive)
   (backward-word)
@@ -478,7 +479,7 @@ Also supports normal one- or multiline comments, indended or not.
 
 (defun mcyt-copy-buffer(&optional arg)
   "Copy the whole buffer into kill-ring, as-is"
-  (interactive "P") 
+  (interactive "P")
   (mcyt--blink (point-min) (point-max))
   (copy-region-as-kill (point-min) (point-max))
   (message "buffer copied"))
