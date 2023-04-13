@@ -19,7 +19,7 @@
 ;; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
 ;; USA
 
-;; Version: 0.03
+;; Version: 0.04
 ;; Author: T.v.Dein <tlinden@cpan.org>
 ;; Keywords: copy yank mark things
 ;; URL: https://github.com/tlinden/mark-copy-yank-things
@@ -137,6 +137,7 @@
 ;;;; Dependencies
 
 (require 'thingatpt)
+(require 'cl-lib)
 
 ;; optional: expand-region
 
@@ -571,7 +572,7 @@ Supports numerical arguments, if present, copy current line
 ARG times. Also accessible with {C-u [0-9]+ C-c y y}"
   (interactive "P")
   (message "arg: %s" (prefix-numeric-value arg))
-  (loop for i
+  (cl-loop for i
         below (prefix-numeric-value arg)
         collect (progn
                   (mcyt-copy-line)
