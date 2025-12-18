@@ -114,7 +114,7 @@ You may also directly customize the key bindings, e.g:
 
 #### Reporting Bugs:
 
-Open   https://github.com/tlinden/mark-copy-yank-things/issues  and
+Open   https://codeberg.org/scip/mark-copy-yank-things/issues  and
 file a new issue.
 
 #### Similar Tools:

@@ -22,7 +22,7 @@
 ;; Version: 0.04
 ;; Author: T.v.Dein <tlinden@cpan.org>
 ;; Keywords: copy yank mark things
-;; URL: https://github.com/tlinden/mark-copy-yank-things
+;; URL: https://codeberg.org/scip/mark-copy-yank-things
 ;; License: GNU General Public License >= 2
 
 ;;; Commentary:
@@ -131,7 +131,7 @@
 
 ;;;; Reporting Bugs:
 
-;; Open   https://github.com/tlinden/mark-copy-yank-things/issues  and
+;; Open   https://codeberg.org/scip/mark-copy-yank-things/issues  and
 ;; file a new issue
 ;;; Code
 ;;;; Dependencies
@@ -149,7 +149,7 @@
   "Kill first, ask later - an emacs mode for killing things quickly"
   :group 'extensions
   :group 'tools
-  :link '(url-link :tag "Repository" "https://github.com/tlinden/mark-copy-yank-things"))
+  :link '(url-link :tag "Repository" "https://codeberg.org/scip/mark-copy-yank-things"))
 
 (defvar mark-copy-yank-things-mode-map (make-sparse-keymap)
   "Keymap for the MCYT minor mode.")
