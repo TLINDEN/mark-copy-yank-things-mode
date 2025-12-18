@@ -1,3 +1,6 @@
+> [!CAUTION]
+> This software is now being maintained on [Codeberg](https://codeberg.org/scip/mark-copy-yank-things-mode/).
+
 ### MCYT - An emacs minor mode to mark, copy, and yank things
 
 #### Demo
